@@ -59,7 +59,8 @@ def create_list_locale_files(mod_path):
     if os.path.exists(locale_path):
         for entry in os.scandir(locale_path):
             if entry.is_file() and entry.name.endswith('.txt'):
-                files.append(os.path.join(mod_path, 'locale', entry.name))
+                if (entry.name.find('template') == -1):
+                    files.append(os.path.join(mod_path, 'locale', entry.name))
         files.sort()
     return files
 
@@ -111,9 +112,10 @@ def main():
     flist = create_list_locale_files(path)
     for elem in create_list_lua_files(path):
         replace_i18n_engine(path, mod_name,elem)
-    i18n_data = read_all_i18n(flist)
-    write_data(os.path.join(path, 'locale','template.txt'), i18n_header + create_template(i18n_data) + ['\n'])
-    write_i18n_files(mod_name, i18n_header, i18n_data)
+    if not (flist == []):
+        i18n_data = read_all_i18n(flist)
+        write_data(os.path.join(path, 'locale','template.txt'), i18n_header + create_template(i18n_data) + ['\n'])
+        write_i18n_files(mod_name, i18n_header, i18n_data)
 
 if __name__ == "__main__":
     main()
