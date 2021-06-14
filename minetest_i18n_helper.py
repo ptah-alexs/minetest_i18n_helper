@@ -25,21 +25,10 @@ def write_data(name, data):
     with open(name,'w') as fout:
         fout.writelines(data)
 
-def path_parts(path, direction = 0):
-    folders = []
+def get_dir_name(path):
     if (path[-1] == os.sep):
         path = path[:-1]
-    while 1:
-        path, folder = os.path.split(path)
-        if folder != "":
-            folders.append(folder)
-        else:
-            if path != "":
-                folders.append(path)
-                break
-    if (direction == 0):
-        folders.reverse()
-    return folders
+    return path[path.rfind('/')+1:]
 
 def get_mod_name(path):
     modconf_path = os.path.join(path, 'mod.conf')
@@ -50,7 +39,7 @@ def get_mod_name(path):
                 s_index = fstr.find('=')
                 if not (s_index == -1):
                     return fstr[s_index+1:-1].strip()
-    return path_parts(path)[-1]
+    return get_dir_name(path)
 
 def create_list_files(path, extention):
     files_list = []
@@ -114,7 +103,7 @@ def create_locale_file(data):
 
 def write_i18n_files(path, mod_name, data):
     for key, value in data.items():
-        base_name = key[key.rfind('/')+1:-4]
+        base_name = get_dir_name(key)[:-4]
         new_file_name = f'{mod_name}.{base_name}.tr'
         str_list = [f'# textdomain: {mod_name}\n'] + create_locale_file(value) 
         if not(str_list[-1] == '\n'):
