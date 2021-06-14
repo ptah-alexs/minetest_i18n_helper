@@ -91,6 +91,7 @@ def create_template(path, mod_name, data):
     if not(str_list[-1] == '\n'):
         str_list.append('\n')
     write_data(os.path.join(path,'template.txt'), str_list)
+    print('template.txt created')
 
 def create_locale_file(data):
     strings = []
@@ -109,7 +110,10 @@ def write_i18n_files(path, mod_name, data):
         if not(str_list[-1] == '\n'):
             str_list.append('\n')
         write_data(os.path.join(path, new_file_name), str_list)
+        print(f'{new_file_name} created')
         os.remove(key)
+        print(f'{base_name}.txt removed')
+        
 
 def i18n_files_processing(path, name):
     locale_path = os.path.join(path, 'locale')
