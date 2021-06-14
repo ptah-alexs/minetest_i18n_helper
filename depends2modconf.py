@@ -66,6 +66,9 @@ def main():
             print('Directory not found')
             quit()
     mod_name = get_dir_name(current_path)
+    if os.path.exists(os.path.join(current_path, 'mod.conf')):
+        print('mod.conf already exists')
+        quit()
     make_modconf(current_path, mod_name)
 
 if __name__ == "__main__":
