@@ -5,4 +5,6 @@ minetest_i18n_helper.py - convert i18n files from IntlLib to minetest.get_trasla
 
 autogenerate_en_locale.py - genetate missing eng tralslation from template.txt
 
+depends2modconf.py - replace depends.txt by mod.conf 
+
 Just run in mod directory.
