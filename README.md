@@ -7,4 +7,6 @@ autogenerate_en_locale.py - genetate missing eng tralslation from template.txt
 
 depends2modconf.py - replace depends.txt by mod.conf 
 
+**require python 3.8+**
+
 Just run in mod directory.
