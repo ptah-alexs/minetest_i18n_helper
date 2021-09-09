@@ -79,6 +79,9 @@ def read_all_i18n(flist):
         result.update({elem: file_data})
     return result
 
+def nl_escape(string):
+    return string.replace('\\n', '@n')
+
 def create_template(path, mod_name, data):
     str_list = []
     for _, value in data.items():
@@ -86,7 +89,7 @@ def create_template(path, mod_name, data):
             if not elem.startswith('###'):
                 s_index = elem.find('=')
                 if not (s_index == -1):
-                    str_list.append(f'{elem[:s_index-1].strip()}=\n')
+                    str_list.append(f'{nl_escape(elem[:s_index-1].strip())}=\n')
     str_list = [f'# textdomain: {mod_name}\n'] + list(set(str_list))
     if not(str_list[-1] == '\n'):
         str_list.append('\n')
@@ -99,7 +102,7 @@ def create_locale_file(data):
         if not elem.startswith('###'):
             s_index = elem.find('=')
             if not (s_index == -1):
-                strings.append(f'{elem[:s_index-1].strip()}={elem[s_index+1:-1].strip()}\n')
+                strings.append(f'{nl_escape(elem[:s_index-1].strip())}={nl_escape(elem[s_index+1:-1].strip())}\n')
     return strings
 
 def write_i18n_files(path, mod_name, data):
